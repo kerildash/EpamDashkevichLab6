@@ -34,9 +34,9 @@ namespace EpamDashkevichLab6.Models
     {
         private Ticket[] _Tickets =
         {
-            new Ticket("The Matrix Resurrections", "18:20", true, 2,
+            new Ticket("The Matrix Resurrections", "18:20", false, 2,
                 9, 7, 8.50),
-            new Ticket("Dune", "19:00", false, 8,
+            new Ticket("Dune", "19:00", true, 8,
                 7, 8, 5),
             new Ticket("Петровы в гриппе", "17:20", false, 5,
                 5, 6, 6.20),
@@ -46,25 +46,31 @@ namespace EpamDashkevichLab6.Models
                 4, 3, 3)
         };
 
-        Tuple<string, string, string, double, bool> CheckTicket(string title, int seat, double price, string time)
+        public Tuple<string, string, string, double, bool> CheckTicket(string title, int seat, double price, string time)
         {
             try
             {
                 Ticket ticket = Find(title);
+
                 string placeType = $"r. {ticket._Row} s. {seat}";
+
                 string is3d = "";
                 if (ticket._Is3d == true)
                 {
-                    is3d = "3D";
+                    is3d = "3D.";
                 }
-                string ticketNumber = $"{is3d}{ticket._Row}{seat}";
+
+                string ticketNumber = $"{is3d}{ticket._Row}.{seat}";
+
                 double average = 
                     (ticket._Price1 + ticket._Price2 + ticket._Price3 + price) / 3f;
+
                 bool isTime = false;
                 if(time == ticket._Time)
                 {
                     isTime = true;
                 }
+
                 return Tuple.Create(title, placeType, ticketNumber, average, isTime);
             }
             catch

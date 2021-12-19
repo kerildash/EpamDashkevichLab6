@@ -11,6 +11,7 @@ namespace EpamDashkevichLab6.IO
     class Cli
     {
         ArrayMethods methods = new ArrayMethods();
+        Cinema cinema = new Cinema();
         public void Menu()
         {
             bool isExit = false;
@@ -39,7 +40,8 @@ namespace EpamDashkevichLab6.IO
                             NumberOfColumnsWithZero();
                             break;
                         case 4:
-                            throw new NotImplementedException();
+                            CheckTicket();
+                            break;
                         case 0:
                             isExit = true;
                             break;
@@ -77,7 +79,7 @@ namespace EpamDashkevichLab6.IO
             int length;
             double[] array;
 
-            Console.Write("Enter length of array: ");
+            Console.Write("\nEnter length of array: ");
             length = int.Parse(Console.ReadLine());
             array = new double[length];
 
@@ -96,7 +98,7 @@ namespace EpamDashkevichLab6.IO
             int numberOfColumns;
             double[,] matrix;
 
-            Console.Write("Enter number of rows: ");
+            Console.Write("\nEnter number of rows: ");
             numberOfRows = int.Parse(Console.ReadLine());
             Console.Write("Enter number of columns: ");
             numberOfColumns = int.Parse(Console.ReadLine());
@@ -116,6 +118,30 @@ namespace EpamDashkevichLab6.IO
             }
 
             return matrix;
+        }
+        public void CheckTicket()
+        {
+            Console.WriteLine("\nEnter film title: ");
+            string title = Console.ReadLine();
+            Console.WriteLine("Enter seat: ");
+            int seat = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter price: ");
+            double price = double.Parse(Console.ReadLine());
+            Console.WriteLine("Enter time: ");
+            string time = Console.ReadLine();
+
+            var ticketInfo = cinema.CheckTicket(title, seat, price, time);
+
+            string isTime = "no";
+            if (ticketInfo.Item5)
+            {
+                isTime = "yes";
+            }
+            Console.WriteLine($"\nFilm title: {ticketInfo.Item1}");
+            Console.WriteLine($"Seat type: {ticketInfo.Item2}");
+            Console.WriteLine($"Ticket number: {ticketInfo.Item3}");
+            Console.WriteLine($"Average price: {ticketInfo.Item4:f2}");
+            Console.WriteLine($"Is time correct: {isTime}");
         }
     }
 }
